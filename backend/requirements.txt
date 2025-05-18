@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+cryptography
+pillow
+numpy
+PyPDF2
+python-multipart
