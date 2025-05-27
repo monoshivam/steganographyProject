@@ -9,7 +9,7 @@ const DragAndDrop = ({ file, setFile }) => {
   const allowedTypes = ["image/png", "image/jpeg", "application/pdf"];
   const maxSizeInBytes = 10 * 1024 * 1024;
 
-  const validateFile = (file) => {
+  const validateFile = useCallback((file) => {
     setError("");
 
     if (!allowedTypes.includes(file.type)) {
@@ -23,7 +23,7 @@ const DragAndDrop = ({ file, setFile }) => {
     }
 
     return true;
-  };
+  }, [allowedTypes, maxSizeInBytes]);
 
   const handleDrag = useCallback((e) => {
     e.preventDefault();
@@ -31,8 +31,7 @@ const DragAndDrop = ({ file, setFile }) => {
 
     if (e.type === "dragenter" || e.type === "dragover") {
       setIsDragging(true);
-    } else if (e.type === "dragleav
-      e" || e.type === "drop") {
+    } else if (e.type === "dragleave" || e.type === "drop") {
       setIsDragging(false);
     }
   }, []);
@@ -51,7 +50,7 @@ const DragAndDrop = ({ file, setFile }) => {
         e.dataTransfer.clearData();
       }
     },
-    [setFile],
+    [setFile, validateFile],
   );
 
   const handleChange = (e) => {
@@ -93,7 +92,6 @@ const DragAndDrop = ({ file, setFile }) => {
         </svg>
       );
     } else {
-
       return (
         <svg
           className="w-8 h-8 mr-3 text-blue-500"
@@ -129,7 +127,7 @@ const DragAndDrop = ({ file, setFile }) => {
                   ? "border-red-500 bg-red-50"
                   : "border-blue-400 hover:border-blue-500 hover:bg-blue-50"
           }
-          rounded-lg h-100
+          rounded-lg h-[400px]
         `}
         onClick={!file ? openFileDialog : undefined}
         onDragEnter={handleDrag}
