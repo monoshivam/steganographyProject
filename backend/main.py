@@ -13,7 +13,7 @@ app = FastAPI(title="Cyber Steganography API", version="1.0.0")
 origins = [
     "http://localhost:5173",  # Local development
     "http://localhost:3000",  # Alternative local port
-    "https://*.vercel.app",   # Vercel deployments
+    "https://cyphers-sigma.vercel.app",  # Your specific Vercel deployment
 ]
 
 # Add environment variable for custom frontend URL
@@ -24,6 +24,7 @@ if frontend_url:
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
